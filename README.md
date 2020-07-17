@@ -1,6 +1,8 @@
 # Guide on Cloud Run hosting dotnet core Webapi container 
-* [Google Cloud Run](https://cloud.google.com/run)
-* [Walkthrough](https://cloud.google.com/run/docs/quickstarts/build-and-deploy#c) 
+
+[Google Cloud Run](https://cloud.google.com/run)  
+
+[ASP.NET Core Web API - Walkthrough](https://cloud.google.com/run/docs/quickstarts/build-and-deploy#c)   
 
 1. Create new dotnet core webapi `dotnet new webapi -n helloworld` [tutorial](https://medium.com/@laroccanicola/creating-our-first-web-api-with-net-core-2-and-visual-studio-code-on-linux-ubuntu-d5d3458ae989)
    * In CreateHostBuilder, setup listening port on localhost:
