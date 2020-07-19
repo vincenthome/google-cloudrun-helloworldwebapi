@@ -27,12 +27,14 @@ namespace helloworld
         {
             services.AddCors(opts =>
             {
-                opts.AddPolicy("AllowAll", builder =>
+                opts.AddPolicy("CorsPolicy", builder =>
                 {
-                    builder.AllowAnyOrigin()
-                            .AllowAnyMethod()
-                            .AllowAnyHeader();
-                    //.AllowCredentials();
+                    builder
+                        // .WithOrigins("https://helloworldngclient-f2jksykvna-ue.a.run.app")
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        // .AllowCredentials()
+                        .AllowAnyHeader();
                 });
             });
 
@@ -51,6 +53,8 @@ namespace helloworld
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
