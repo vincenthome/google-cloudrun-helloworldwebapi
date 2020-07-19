@@ -21,8 +21,8 @@
       * `mcr.microsoft.com/dotnet/core/sdk:3.1-alpine`
    3. Expose Container Port. `EXPOSE 8080`
 4. Docker Build. `⌘⇧P: Docker: Build Image`
-5. Google Container Registry GCR. `gcloud builds submit --tag gcr.io/cloudrunmyproject/helloworld`
-6. Deploy Cloud Run. `gcloud run deploy --image gcr.io/cloudrunmyproject/helloworld --platform managed`
+5. Google Container Registry GCR. `gcloud builds submit --tag gcr.io/cloudrunmyproject/myservice`
+6. Deploy Cloud Run. `gcloud run deploy --image gcr.io/cloudrunmyproject/myservice --platform managed --allow-unauthenticated`
 
 ## Angular Client with Nginx
 
