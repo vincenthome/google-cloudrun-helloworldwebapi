@@ -22,16 +22,17 @@ namespace Controllers
 
         [HttpGet]
         public async System.Threading.Tasks.Task<IEnumerable<Products>> ListAllProductsAsync([FromHeader]string authorization)
-        {            
+        {       
             try
             {
                 string Token = authorization.Replace("Bearer ", "");
                 MyPayload pl = await GoogleJsonWebSignatureHelper.VerifyIdTokenAsync(Token);
+                Console.WriteLine("VerifyIdToken Sucess");
                 return products;
             }
             catch (InvalidJwtException e)
             {
-                Console.WriteLine(e.Message);
+                Console.WriteLine("InvalidJwtException: " + e.Message);
                 return null;
             }
         }
