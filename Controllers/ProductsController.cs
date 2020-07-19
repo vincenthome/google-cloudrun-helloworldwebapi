@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using Models;
+using Google.Apis.Auth;
+using System;
+using Helper;
 
 namespace Controllers
 {
@@ -18,34 +21,66 @@ namespace Controllers
         };
 
         [HttpGet]
-        public IEnumerable<Products> ListAllProducts()
-        {
-            return products;
+        public async System.Threading.Tasks.Task<IEnumerable<Products>> ListAllProductsAsync([FromHeader]string authorization)
+        {            
+            try
+            {
+                string Token = authorization.Replace("Bearer ", "");
+                MyPayload pl = await GoogleJsonWebSignatureHelper.VerifyIdTokenAsync(Token);
+                return products;
+            }
+            catch (InvalidJwtException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
         }
 
         [HttpGet("code/{codart}")]
-        public IEnumerable<Products> ListProductsByCode(string codart)
+        public async System.Threading.Tasks.Task<IEnumerable<Products>> ListProductsByCodeAsync([FromHeader]string authorization, [FromRoute]string codart)
         {
-             IEnumerable<Products> retVal =
-                from g in products 
-                where g.Code.Equals(codart) 
-                select g;
+            try
+            {
+                string Token = authorization.Replace("Bearer ", "");
+                MyPayload pl = await GoogleJsonWebSignatureHelper.VerifyIdTokenAsync(Token);
+                IEnumerable<Products> retVal =
+                    from g in products 
+                    where g.Code.Equals(codart) 
+                    select g;
 
-            return retVal;
+                return retVal;
+            }
+            catch (InvalidJwtException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }            
 
         }
 
         [HttpGet("description/{desart}")]
-        public IEnumerable<Products> ListProductsByDescription(string desart)
+        public async System.Threading.Tasks.Task<IEnumerable<Products>> ListProductsByDescriptionAsync([FromHeader]string authorization, [FromRoute]string desart)
         {
-            IEnumerable<Products> retVal = 
-                from g in products
-                where g.Description.ToUpper().Contains(desart.ToUpper())
-                orderby g.Code
-                select g;
-                
-            return retVal;
+            try
+            {
+                string Token = authorization.Replace("Bearer ", "");
+                MyPayload pl = await GoogleJsonWebSignatureHelper.VerifyIdTokenAsync(Token);
+                IEnumerable<Products> retVal = 
+                    from g in products
+                    where g.Description.ToUpper().Contains(desart.ToUpper())
+                    orderby g.Code
+                    select g;
+                    
+                return retVal;
+            }
+            catch (InvalidJwtException e)
+            {
+                Console.WriteLine(e.Message);
+                return null;
+            }
+
             
         }
+        
     }
 }
