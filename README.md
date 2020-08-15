@@ -1,4 +1,4 @@
-# Guide on Cloud Run 
+# Guide on Google Cloud Run 
 
 ## ASP.NET Core Webapi container with Kestrel
 
